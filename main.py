@@ -1,12 +1,15 @@
 from backend.logic.smart_logic import Smart_Logic
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 import uvicorn
 import openai
 import json
 from pydantic import BaseModel
 from fastapi import Request
 import re
+import os
 
 data_path = "data/golden_dataset_mh.csv"
 
@@ -16,10 +19,13 @@ client = openai.OpenAI(
 )
 app = FastAPI()
 
+# Serve React static files from the "static" folder (built frontend)
+app.mount("/static", StaticFiles(directory="frontend/build/static"), name="static")
+
 # Optional: Enable CORS so frontend can call the API from a browser
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Change to your frontend domain in production
+    allow_origins=["http://localhost:3000","http://127.0.0.1:3000"],  # Change to your frontend domain in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,6 +36,15 @@ class InputData(BaseModel):
 
 class PromptInput(BaseModel):
     user_input: str
+
+# Serve the React app's index.html for the root and all frontend routes
+@app.get("/")
+@app.get("/{full_path:path}")
+def serve_react_app(full_path: str = ""):
+    index_path = os.path.join("frontend", "build", "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    return {"error": "index.html not found"}
 
 @app.post("/data")
 def smart_data(input_data: InputData):
@@ -92,7 +107,3 @@ def generate_data(prompt_input: PromptInput, request: Request):
 
     except Exception as e:
         return {"error": str(e)}
-
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
