@@ -1,0 +1,51 @@
+[
+    {
+        "name":"PROXIMATE PRINCIPLES - MACROS",
+        "id":"PPM",
+        "feature":["moisture","protein","fat","mineral","crude_fibre","carbohydrates","energy"],
+        "priority":1
+    },
+    {
+        "name":"MINERALS AND TRACE ELEMENTS",
+        "id":"MTE",
+        "feature":["calcium","phosphorus","iron","magnesium","sodium","potassium","copper","manganese","molybdenum","zinc","chromium","sulfur","chlorine"],
+        "priority":2
+
+    },
+    {
+        "name":"VITAMINS",
+        "id":"VIT",
+        "feature":["carotene","Thiamine_B1","Riboflavin_B2","Niacin_B3","Pyridoxine_B6_Total","Folic_Acid_Free","Folic_Acid_total","Vitamin_C","choline"],
+        "priority":3
+    },
+    {
+        "name":"ESSENTIAL AMNO ACIDS",
+        "id":"EAA",
+        "feature":["Approx_tot_Ng_per_100","Histidine","Lysine","Tryptophan","Phenylalanine","Methionine","Threonine","Leucine","Isoleucine","Valine"],
+        "priority":4
+    },
+    {
+        "name":"CONDITIONALLY ESSENTIAL/NON-ESSENTIAL AMNO ACIDS",
+        "id":"NEAA",
+        "feature":["Arginine","Tyrosine","Cystine"],
+        "priority":5
+    },
+    {
+        "name":"FATTY ACID COMPOSITION",
+        "id":"FAC",
+        "feature":["Palmitic_acid","Stearic_acid","Arachidic","Behenic","Lignoceric","Total_SFA","Palmitoleic","Oleic","Total_MUFA","linoleic","linolenic","Total_PUFA"],
+        "priority":6
+    },
+    {
+        "name":"OXLAIC ACID AND PHYTIN PHOSPHORUS IN FOODS",
+        "id":"OCPP",
+        "feature":["oxalic_acid","phytin_p","phytin_phosphorus_percentage"],
+        "priority":7
+    },
+    {
+        "name":"DIETARY FIBRE",
+        "id":"DF",
+        "feature":["phytin_p","IDF_g","SDF_g"],
+        "priority":8
+    }
+]

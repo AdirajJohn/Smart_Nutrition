@@ -1,0 +1,108 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+  margin: 0;
+  padding: 0;
+}
+
+textarea {
+  width: 100%;
+  max-width: 600px;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+  border: 1px solid #333;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  resize: vertical;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-bottom: 24px;
+}
+
+button:hover {
+  background-color: #1976d2;
+}
+
+.section-wrapper {
+  margin-top: 10px;
+}
+
+.section-container {
+  background-color: #1f1f1f;
+  border: 1px solid #333;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.custom-table-wrapper {
+  padding: 10px 20px;
+  overflow-x: auto;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  color: #e0e0e0;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 10px;
+  border: 1px solid #444;
+  text-align: center;
+}
+
+.custom-table th {
+  background-color: #333;
+  font-weight: 600;
+}
+
+.custom-table td {
+  background-color: #1b1b1b;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+
+pre {
+  background-color: #1c1c1c;
+  padding: 10px;
+  border-radius: 8px;
+  max-width: 600px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 14px;
+  border: 1px solid #333;
+}
