@@ -1,9 +1,7 @@
 pandas
-re
 duckdb
 uvicorn
 openai
 pydantic
 fastapi
-json
 python-dotenv

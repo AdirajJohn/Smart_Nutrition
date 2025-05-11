@@ -9,7 +9,14 @@ RUN npm install && npm run build
 FROM python:3.10-slim
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y curl && apt-get clean
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    python3-dev \
+    && apt-get clean
 
 # Set working directory
 WORKDIR /app
