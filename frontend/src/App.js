@@ -11,7 +11,11 @@ function App() {
   useEffect(() => {
     fetch("/metadata.json")
       .then(res => res.json())
-      .then(data => setMetadata(data.sort((a, b) => a.priority - b.priority)));
+      .then(data => {
+        const sortedMetadata = data.sort((a, b) => a.priority - b.priority);
+        console.log("Metadata:", sortedMetadata); // ✅ Log here
+        setMetadata(sortedMetadata);
+      });
   }, []);
 
   const toggleSection = (id) => {
@@ -31,6 +35,7 @@ function App() {
 
       const result = await res1.json();
       setData(result);
+      console.log("LLM JSON", result); // <-- Log here
 
       const res2 = await fetch("http://localhost:8000/data", {
         method: "POST",
@@ -40,6 +45,8 @@ function App() {
 
       const dfResult = await res2.json();
       setDfData(dfResult);
+      console.log("DataFrame result", dfResult); // <-- Log here
+      console.log("Sample row:", dfResult[0]);   // <-- Optional row preview
     } catch (error) {
       console.error("Error:", error);
     }

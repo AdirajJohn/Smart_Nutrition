@@ -24,9 +24,6 @@ client = openai.OpenAI(
 )
 app = FastAPI()
 
-# Serve React static files from the "static" folder (built frontend)
-app.mount("/static", StaticFiles(directory="frontend/build/static"), name="static")
-
 # Optional: Enable CORS so frontend can call the API from a browser
 app.add_middleware(
     CORSMiddleware,
@@ -41,21 +38,6 @@ class InputData(BaseModel):
 
 class PromptInput(BaseModel):
     user_input: str
-
-# Serve the React app's index.html for the root and all frontend routes
-@app.get("/")
-@app.get("/{full_path:path}")
-def serve_react_app(full_path: str = ""):
-    index_path = os.path.join("frontend", "build", "index.html")
-    if os.path.exists(index_path):
-        return FileResponse(index_path)
-    return {"error": "index.html not found"}
-
-@app.post("/data")
-def smart_data(input_data: InputData):
-    input_dict = input_data.input_json
-    df = Smart_Logic.smart_fetch(sample_input=input_dict,data_path=data_path)
-    return df.to_dict(orient='records')
 
 @app.post("/generate-data")
 def generate_data(prompt_input: PromptInput, request: Request):
@@ -109,6 +91,15 @@ def generate_data(prompt_input: PromptInput, request: Request):
         #Secondary validation with the ingredients name in the data
         final_items = Smart_Logic.filter_json_by_list(input_json=validated_json,comparison_list=ingredients_list)
         return final_items
-
+    
     except Exception as e:
         return {"error": str(e)}
+    
+@app.post("/data")
+def smart_data(input_data: InputData):
+    input_dict = input_data.input_json
+    df = Smart_Logic.smart_fetch(sample_input=input_dict,data_path=data_path)
+    return df.to_dict(orient='records')
+
+
+app.mount("/", StaticFiles(directory="frontend/build", html=True), name="frontend")

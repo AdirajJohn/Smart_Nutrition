@@ -1,23 +1,52 @@
-name: Build and Push Docker Image
+name: DockerHub Ci
+
 on:
   push:
     branches:
       - main
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  workflow_dispatch:
 
-      - name: Log in to Docker Hub
+jobs:
+  Build-and-Push:
+    runs-on: ubuntu-latest
+
+    steps:
+    #Checkout the repository
+      - name: Checkout Repository 
+        uses: actions/checkout@v4
+
+      - name: Get current date
+        id: date
+        run: |
+          echo "::set-output name=current_date::$(date +'%Y-%m-%d')"
+
+      - name: Print date var
+        run: |
+          echo "print ${{steps.date.outputs.current_date}}"
+    
+    #Login to Docker Hug
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{secrets.DOCKER_USERNAME}}
+          password: ${{secrets.DOCKER_PASSWORD}}
 
-      - name: Build and push Docker image
-        run: |
-          docker build -t adirajjohn/smart_nutrition:latest .
-          docker push adirajjohn/smart_nutrition:latest
+    # Setup Docker Buildx
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@v2
 
+    # Build and push Docker Image with two lags
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME}}/smart_nutrition:latest
+            ${{ secrets.DOCKER_USERNAME}}/smart_nutrition:${{steps.date.outputs.current_date}}
+            
+
+      - name: Docker Logout
+        run: docker logout
+
+        
