@@ -10,11 +10,16 @@ from pydantic import BaseModel
 from fastapi import Request
 import re
 import os
+from dotenv import load_dotenv
+#Get env variables from local .env
+load_dotenv()
 
 data_path = "data/golden_dataset_mh.csv"
 
+api_key = os.getenv("OPENAI_API_KEY")
+
 client = openai.OpenAI(
-    api_key="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",
+    api_key=api_key,
     base_url="https://api.openai.com/v1"
 )
 app = FastAPI()
