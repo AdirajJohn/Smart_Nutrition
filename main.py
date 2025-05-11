@@ -34,7 +34,6 @@ class PromptInput(BaseModel):
 @app.post("/data")
 def smart_data(input_data: InputData):
     input_dict = input_data.input_json
-    print(input_dict)
     df = Smart_Logic.smart_fetch(sample_input=input_dict,data_path=data_path)
     return df.to_dict(orient='records')
 
