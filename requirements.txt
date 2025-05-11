@@ -6,3 +6,4 @@ openai
 pydantic
 fastapi
 json
+python-dotenv
