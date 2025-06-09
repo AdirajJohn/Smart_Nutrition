@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 import uvicorn
 import openai
 import json
+from typing import Dict
 from pydantic import BaseModel
 from fastapi import Request
 import re
@@ -34,7 +35,7 @@ app.add_middleware(
 )
 
 class InputData(BaseModel):
-    input_json : dict[str,int]
+    input_json : Dict[str,int]
 
 class PromptInput(BaseModel):
     user_input: str
@@ -103,3 +104,6 @@ def smart_data(input_data: InputData):
 
 
 app.mount("/", StaticFiles(directory="frontend/build", html=True), name="frontend")
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
