@@ -28,7 +28,7 @@ app = FastAPI()
 # Optional: Enable CORS so frontend can call the API from a browser
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://143.110.247.163:3000"],  # Change to your frontend domain in production
+    allow_origins=["http://134.209.156.223:3000","https://healthkare.net"],  # Change to your frontend domain in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
