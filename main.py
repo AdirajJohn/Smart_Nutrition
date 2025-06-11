@@ -103,7 +103,7 @@ def smart_data(input_data: InputData):
     return df.to_dict(orient='records')
 
 
-app.mount("/", StaticFiles(directory="frontend/build", html=True), name="frontend")
+#app.mount("/", StaticFiles(directory="frontend/build", html=True), name="frontend")
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
