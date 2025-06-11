@@ -102,10 +102,6 @@ def smart_data(input_data: InputData):
     df = Smart_Logic.smart_fetch(sample_input=input_dict,data_path=data_path)
     return df.to_dict(orient='records')
 
-@app.get("/")
-def serve_root():
-   return FileResponse("frontend/build/index.html")
-
 
 app.mount("/", StaticFiles(directory="frontend/build", html=True), name="frontend")
 
