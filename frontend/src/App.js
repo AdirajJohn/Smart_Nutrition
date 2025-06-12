@@ -27,7 +27,7 @@ function App() {
 
   const handleSubmit = async () => {
     try {
-      const res1 = await fetch('https://healthkare.net:8000/generate-data', {
+      const res1 = await fetch('https://healthkare.net/generate-data', {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_input: prompt }),
@@ -37,7 +37,7 @@ function App() {
       setData(result);
       console.log("LLM JSON", result); // <-- Log here
 
-      const res2 = await fetch("https://healthkare.net:8000/data", {
+      const res2 = await fetch("https://healthkare.net/data", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input_json: result }),
