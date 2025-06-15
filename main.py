@@ -99,7 +99,9 @@ def generate_data(prompt_input: PromptInput, request: Request):
 @app.post("/data")
 def smart_data(input_data: InputData):
     input_dict = input_data.input_json
-    df = Smart_Logic.smart_fetch(sample_input=input_dict,data_path=data_path)
+    if not input_dict:
+        return {"message": "No ingredient input provided", "data": []}
+    df = Smart_Logic.smart_fetch(sample_input=input_dict, data_path=data_path)
     return df.to_dict(orient='records')
 
 
