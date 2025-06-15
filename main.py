@@ -28,7 +28,7 @@ app = FastAPI()
 # Optional: Enable CORS so frontend can call the API from a browser
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://healthkare.net"],  # Change to your frontend domain in production
+    allow_origins=["*"],  # Change to your frontend domain in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -99,11 +99,16 @@ def generate_data(prompt_input: PromptInput, request: Request):
 @app.post("/data")
 def smart_data(input_data: InputData):
     input_dict = input_data.input_json
-    df = Smart_Logic.smart_fetch(sample_input=input_dict,data_path=data_path)
+
+    if not input_dict:
+        return {"message": "No ingredient input provided", "data": []}  # Graceful empty response
+
+    df = Smart_Logic.smart_fetch(sample_input=input_dict, data_path=data_path)
     return df.to_dict(orient='records')
+
 
 
 app.mount("/", StaticFiles(directory="frontend/build", html=True), name="frontend")
 
-# if __name__ == "__main__":
-#     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
