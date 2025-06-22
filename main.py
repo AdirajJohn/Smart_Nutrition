@@ -1,17 +1,19 @@
 from backend.logic.smart_logic import Smart_Logic
+from backend.router.auth import router as auth_router
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
 import uvicorn
 import openai
 import json
 from typing import Dict
 from pydantic import BaseModel
-from fastapi import Request
+from fastapi import Request, HTTPException
 import re
 import os
 from dotenv import load_dotenv
+from starlette.middleware.sessions import SessionMiddleware
+
+
 #Get env variables from local .env
 load_dotenv()
 
@@ -25,7 +27,6 @@ client = openai.OpenAI(
 )
 app = FastAPI()
 
-# Optional: Enable CORS so frontend can call the API from a browser
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Change to your frontend domain in production
@@ -33,6 +34,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+####################################################### Oauth implementation ########################
+app.include_router(auth_router)
 
 class InputData(BaseModel):
     input_json : Dict[str,int]
@@ -108,7 +112,7 @@ def smart_data(input_data: InputData):
 
 
 
-app.mount("/", StaticFiles(directory="frontend/build", html=True), name="frontend")
+#app.mount("/", StaticFiles(directory="frontend/build", html=True), name="frontend")
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
